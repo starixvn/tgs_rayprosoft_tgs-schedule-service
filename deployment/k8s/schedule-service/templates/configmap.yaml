@@ -11,13 +11,11 @@ data:
       },
       "Schedule": {
         "ReportAggregate": "http://report-aggregate-service",
-        "Promotion": "http://promotion-api",
         "PromotionRebate": "http://tgs-promotion-rebate",
         "PromotionRelief": "http://promotion-relief-money-service",
         "GameTypeRoundAggregate": "http://game-type-round-aggregate-service",
-        "FillInPlayerBucket": "http://fill-in-player-bucket-service",
-        "BrandGameProvider": "http://brand-game-provider-service",
-        "Email": "{{ .Values.mail.url }}"
+        "Brand": "http://brand-cert-api",
+        "BrandGameProvider": "http://brand-game-provider-service"
       },
       "ProfitRebate": {
         "Url": "http://profit-rebate-service"

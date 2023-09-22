@@ -21,11 +21,6 @@ var builder = WebApplication.CreateBuilder(args);
             var config = sp.GetRequiredService<IConfiguration>();
             options.BaseUrl = config.GetValue<Uri>("Schedule:ReportAggregate")!;
         })
-        .AddPromotionClientServices((options, sp) =>
-        {
-            var config = sp.GetRequiredService<IConfiguration>();
-            options.Url = config.GetValue<Uri>("Schedule:Promotion")!;
-        })
         .AddPromotionRebateClient((options, sp) =>
         {
             var config = sp.GetRequiredService<IConfiguration>();
