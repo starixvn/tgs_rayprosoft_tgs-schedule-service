@@ -7,9 +7,7 @@ data:
   appsettings.json: |
     {
       "Hangfire": {
-        "ConnectionString": "{{ .Values.connectionStrings.redis }}",
-        "Prefix": "schedule-service",
-        "Schedule": { "SchedulePollingInterval": 15 }
+        "Prefix": "schedule-service"
       },
       "Schedule": {
         "ReportAggregate": "http://report-aggregate-service",
