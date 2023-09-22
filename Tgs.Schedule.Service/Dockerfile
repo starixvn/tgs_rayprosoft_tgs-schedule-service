@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BuildConfiguration=Release
 WORKDIR /src
+COPY ["nuget.config", "."]
 COPY ["Tgs.Schedule.Service/Tgs.Schedule.Service.csproj", "Tgs.Schedule.Service/"]
 RUN dotnet restore "Tgs.Schedule.Service/Tgs.Schedule.Service.csproj"
 COPY . .
