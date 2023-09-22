@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>e357b317-b31a-4c07-95d2-4c1c0e5b17d8</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.8.5" />
+    <PackageReference Include="Hangfire.Console" Version="1.4.2" />
+    <PackageReference Include="Hangfire.Dashboard.Management.v2" Version="2.2.0" />
+    <PackageReference Include="Hangfire.Redis.StackExchange" Version="1.9.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Tgs.Brand.GameProvider.Client" Version="0.0.2" />
+    <PackageReference Include="Tgs.BrandCertificateClient" Version="0.0.28" />
+    <PackageReference Include="Tgs.Game.Type.Round.Aggregate.Client" Version="0.0.2" />
+    <PackageReference Include="Tgs.ProfitRebate.Client" Version="1.1.0" />
+    <PackageReference Include="Tgs.Promotion.Client" Version="1.0.43" />
+    <PackageReference Include="Tgs.Promotion.RebateService.Client" Version="0.0.3" />
+    <PackageReference Include="Tgs.Promotion.ReliefMoney.Client" Version="0.0.1" />
+    <PackageReference Include="Tgs.Report.Aggregate.Client" Version="0.0.10" />
+    <PackageReference Include="Tgs.Report.Client" Version="0.0.61" />
+  </ItemGroup>
+
+</Project>
