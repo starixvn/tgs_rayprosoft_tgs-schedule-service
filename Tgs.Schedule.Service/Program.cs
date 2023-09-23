@@ -1,9 +1,11 @@
 ﻿using System.Reflection;
+
 using Hangfire;
 using Hangfire.Console;
 using Hangfire.Dashboard.Management.v2;
 using Hangfire.Dashboard.Management.v2.Support;
 using Hangfire.Redis.StackExchange;
+
 using Tgs.Brand.GameProvider.Client.DependencyInjection;
 using Tgs.Game.Type.Round.Aggregate.Client.DependencyInjection;
 using Tgs.Promotion.ReliefMoney.Client.DependencyInjection;
@@ -57,13 +59,13 @@ var builder = WebApplication.CreateBuilder(args);
                 Prefix = builder.Configuration.GetValue<string>("Hangfire:Prefix")
             };
             _ = config
-                //.SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-                //.UseSimpleAssemblyNameTypeSerializer()
-                //.UseRecommendedSerializerSettings()
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
                 .UseRedisStorage(connectionString, options)
                 .UseConsole();
 
-            //config.UseManagementPages(new[] { Assembly.GetExecutingAssembly() });
+            config.UseManagementPages(new[] { Assembly.GetExecutingAssembly() });
         })
         .AddSingleton<IScheduleRecurringJob, ScheduleRecurringJob>();
 
@@ -78,7 +80,6 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddHealthChecks();
 }
-
 
 var app = builder.Build();
 {

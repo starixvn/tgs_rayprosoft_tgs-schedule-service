@@ -1,5 +1,7 @@
-using Microsoft.Extensions.Logging.Abstractions;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+
 using NSubstitute;
+
 using Tgs.ProfitRebate.Client;
 using Tgs.ProfitRebate.Client.Models;
 using Tgs.Schedule.Service.JobManagements;

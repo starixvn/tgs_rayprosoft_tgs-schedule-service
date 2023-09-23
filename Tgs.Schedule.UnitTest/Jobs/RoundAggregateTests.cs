@@ -1,5 +1,7 @@
-using Microsoft.Extensions.Logging.Abstractions;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+
 using NSubstitute;
+
 using Tgs.Report.Aggregate.Client;
 using Tgs.Report.Aggregate.Client.Models;
 using Tgs.Schedule.Service.Jobs;

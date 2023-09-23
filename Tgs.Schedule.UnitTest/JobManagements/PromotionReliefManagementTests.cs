@@ -1,5 +1,7 @@
-using Microsoft.Extensions.Logging.Abstractions;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+
 using NSubstitute;
+
 using Tgs.Promotion.ReliefMoney.Client;
 using Tgs.Schedule.Service.JobManagements;
 

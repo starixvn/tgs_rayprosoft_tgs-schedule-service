@@ -1,5 +1,7 @@
-using Microsoft.Extensions.Logging.Abstractions;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+
 using NSubstitute;
+
 using Tgs.BrandCertificate;
 using Tgs.BrandCertificate.Clients;
 using Tgs.ProfitRebate.Client;
