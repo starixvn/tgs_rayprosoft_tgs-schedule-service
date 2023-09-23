@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using Hangfire;
 using Hangfire.Console;
 using Hangfire.Dashboard.Management.v2;
@@ -57,9 +57,9 @@ var builder = WebApplication.CreateBuilder(args);
                 Prefix = builder.Configuration.GetValue<string>("Hangfire:Prefix")
             };
             _ = config
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
+                //.SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                //.UseSimpleAssemblyNameTypeSerializer()
+                //.UseRecommendedSerializerSettings()
                 .UseRedisStorage(connectionString, options)
                 .UseConsole();
 
