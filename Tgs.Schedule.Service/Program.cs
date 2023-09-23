@@ -63,7 +63,7 @@ var builder = WebApplication.CreateBuilder(args);
                 .UseRedisStorage(connectionString, options)
                 .UseConsole();
 
-            config.UseManagementPages(new[] { Assembly.GetExecutingAssembly() });
+            //config.UseManagementPages(new[] { Assembly.GetExecutingAssembly() });
         })
         .AddSingleton<IScheduleRecurringJob, ScheduleRecurringJob>();
 
