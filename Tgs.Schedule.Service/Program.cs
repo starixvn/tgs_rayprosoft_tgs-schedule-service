@@ -12,91 +12,91 @@ using Tgs.Promotion.ReliefMoney.Client.DependencyInjection;
 using Tgs.Schedule.Service;
 
 var builder = WebApplication.CreateBuilder(args);
-{
-    builder.Configuration
-        .AddJsonFile("/config/appsettings.json", true)
-        .AddEnvironmentVariables();
 
-    builder.Services
-        .AddReportAggregateClient((options, sp) =>
-        {
-            var config = sp.GetRequiredService<IConfiguration>();
-            options.BaseUrl = config.GetValue<Uri>("Schedule:ReportAggregate")!;
-        })
-        .AddPromotionRebateClient((options, sp) =>
-        {
-            var config = sp.GetRequiredService<IConfiguration>();
-            options.Url = config.GetValue<Uri>("Schedule:PromotionRebate")!;
-        })
-        .AddPromotionReliefClient((options, sp) =>
-        {
-            var config = sp.GetRequiredService<IConfiguration>();
-            options.Url = config.GetValue<Uri>("Schedule:PromotionRelief")!;
-        })
-        .AddGameTypeRoundAggregateClient((options, sp) =>
-        {
-            var config = sp.GetRequiredService<IConfiguration>();
-            options.Url = config.GetValue<Uri>("Schedule:GameTypeRoundAggregate")!;
-        })
-        .AddBrandServiceClient((options, sp) =>
-        {
-            var config = sp.GetRequiredService<IConfiguration>();
-            options.BrandCertificateBaseUrl = config.GetValue<Uri>("Schedule:Brand")!;
-        })
-        .AddBrandGameProviderClient((options, sp) =>
-        {
-            var config = sp.GetRequiredService<IConfiguration>();
-            options.Url = config.GetValue<Uri>("Schedule:BrandGameProvider")!;
-        })
-        .AddProfitRebateClient(builder.Configuration);
+builder.Configuration
+    .AddJsonFile("/config/appsettings.json", true)
+    .AddEnvironmentVariables();
 
-    builder.Services.AddHangfire((sp, config) =>
-        {
-            var connectionString = builder.Configuration.GetConnectionString("Redis")!;
 
-            var options = new RedisStorageOptions
-            {
-                Prefix = builder.Configuration.GetValue<string>("Hangfire:Prefix")
-            };
-            _ = config
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseRedisStorage(connectionString, options)
-                .UseConsole();
 
-            config.UseManagementPages(new[] { Assembly.GetExecutingAssembly() });
-        })
-        .AddSingleton<IScheduleRecurringJob, ScheduleRecurringJob>();
-
-    builder.Services.AddHangfireServer(options =>
+builder.Services
+    .AddReportAggregateClient((options, sp) =>
     {
-        var queues = new List<string> { "brand", "agent", "player", "aggregate" };
+        var config = sp.GetRequiredService<IConfiguration>();
+        options.BaseUrl = config.GetValue<Uri>("Schedule:ReportAggregate")!;
+    })
+    .AddPromotionRebateClient((options, sp) =>
+    {
+        var config = sp.GetRequiredService<IConfiguration>();
+        options.Url = config.GetValue<Uri>("Schedule:PromotionRebate")!;
+    })
+    .AddPromotionReliefClient((options, sp) =>
+    {
+        var config = sp.GetRequiredService<IConfiguration>();
+        options.Url = config.GetValue<Uri>("Schedule:PromotionRelief")!;
+    })
+    .AddGameTypeRoundAggregateClient((options, sp) =>
+    {
+        var config = sp.GetRequiredService<IConfiguration>();
+        options.Url = config.GetValue<Uri>("Schedule:GameTypeRoundAggregate")!;
+    })
+    .AddBrandServiceClient((options, sp) =>
+    {
+        var config = sp.GetRequiredService<IConfiguration>();
+        options.BrandCertificateBaseUrl = config.GetValue<Uri>("Schedule:Brand")!;
+    })
+    .AddBrandGameProviderClient((options, sp) =>
+    {
+        var config = sp.GetRequiredService<IConfiguration>();
+        options.Url = config.GetValue<Uri>("Schedule:BrandGameProvider")!;
+    })
+    .AddProfitRebateClient(builder.Configuration);
 
-        queues.AddRange(JobsHelper.GetAllQueues());
+builder.Services.AddHangfire((sp, config) =>
+    {
+        var connectionString = builder.Configuration.GetConnectionString("Redis")!;
 
-        options.Queues = queues.Distinct().ToArray();
-    });
+        var options = new RedisStorageOptions
+        {
+            Prefix = builder.Configuration.GetValue<string>("Hangfire:Prefix")
+        };
+        _ = config
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseRedisStorage(connectionString, options)
+            .UseConsole();
 
-    builder.Services.AddHealthChecks();
-}
+        config.UseManagementPages(new[] { Assembly.GetExecutingAssembly() });
+    })
+    .AddSingleton<IScheduleRecurringJob, ScheduleRecurringJob>();
+
+builder.Services.AddHangfireServer(options =>
+{
+    var queues = new List<string> { "brand", "agent", "player", "aggregate" };
+
+    queues.AddRange(JobsHelper.GetAllQueues());
+
+    options.Queues = queues.Distinct().ToArray();
+});
+
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
-{
-    app.UseHangfireDashboard();
 
-    app.MapHangfireDashboard("/hangfire",
-        new DashboardOptions
+app.UseHangfireDashboard(
+    "/hangfire",
+    new DashboardOptions()
+    {
+        Authorization =
+        new[]
         {
-            Authorization = new[]
-            {
-                new IgnoreHangfireAuthorizationFilter()
-            }
-        });
+            new IgnoreHangfireAuthorizationFilter()
+        }
+    });
 
-    app.JobRegistration();
+app.MapHealthChecks("/healthz");
 
-    app.MapHealthChecks("/healthz");
+app.JobRegistration();
 
-    app.Run();
-}
+app.Run();
