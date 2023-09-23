@@ -93,17 +93,9 @@ var app = builder.Build();
             }
         });
 
-
-    _ = app.UseAuthorization();
-
-
     app.JobRegistration();
 
     app.MapHealthChecks("/healthz");
-
-    _ = app.UseHangfireRegisterAsync();
-
-    _ = app.UseRegister();
 
     app.Run();
 }
