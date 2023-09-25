@@ -6,7 +6,6 @@ metadata:
 data:
   appsettings.json: |
     {
-      "AllowedHosts": "*",
       "Hangfire": {
         "Prefix": "schedule-service"
       },
