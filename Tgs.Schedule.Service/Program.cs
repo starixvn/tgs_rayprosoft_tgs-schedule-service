@@ -8,7 +8,6 @@ using Hangfire.Redis.StackExchange;
 
 using Tgs.Brand.GameProvider.Client.DependencyInjection;
 using Tgs.Game.Type.Round.Aggregate.Client.DependencyInjection;
-using Tgs.Player.All.Agent.Client.DependencyInjection;
 using Tgs.Promotion.ReliefMoney.Client.DependencyInjection;
 using Tgs.Schedule.Service;
 
@@ -47,11 +46,6 @@ builder.Services
         options.BrandCertificateBaseUrl = config.GetValue<Uri>("Schedule:Brand")!;
     })
     .AddBrandGameProviderClient((options, sp) =>
-    {
-        var config = sp.GetRequiredService<IConfiguration>();
-        options.Url = config.GetValue<Uri>("Schedule:BrandGameProvider")!;
-    })
-    .AddPlayerAllAgentClient((options, sp) =>
     {
         var config = sp.GetRequiredService<IConfiguration>();
         options.Url = config.GetValue<Uri>("Schedule:BrandGameProvider")!;

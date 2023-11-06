@@ -19,29 +19,9 @@ public class ScheduleRecurringJob : IScheduleRecurringJob
             x => x.CreateAgentCommissionAsync(default),
             Cron.Daily(16, 30));
 
-        _recurringJobManager.AddOrUpdate<PlayerAllAgentRebateSettlementActivator>("PlayerAllAgentRebateDailySettlement",
-            x => x.CreatePlayerAllAgentRebateDailySettlementAsync(default),
-            Cron.Daily(19));
-
-        _recurringJobManager.AddOrUpdate<PlayerAllAgentRebateSettlementActivator>("PlayerAllAgentRebateWeeklySettlement",
-            x => x.CreatePlayerAllAgentRebateWeeklySettlementAsync(default),
-            Cron.Weekly(DayOfWeek.Sunday, 19));
-
-        _recurringJobManager.AddOrUpdate<PlayerAllAgentRebateSettlementActivator>("PlayerAllAgentRebateMonthlySettlement",
-            x => x.CreatePlayerAllAgentRebateMonthlySettlementAsync(default),
-            "* * 19 L * ?");
-
-        _recurringJobManager.AddOrUpdate<PlayerAllAgentRebateDistributionActivator>("PlayerAllAgentRebateDailyDistribution",
-            x => x.CreatePlayerAllAgentRebateDailyDistributionAsync(default),
-            Cron.Daily(3, 30));
-
-        _recurringJobManager.AddOrUpdate<PlayerAllAgentRebateDistributionActivator>("PlayerAllAgentRebateWeeklyDistribution",
-            x => x.CreatePlayerAllAgentRebateWeeklyDistributionAsync(default),
-            Cron.Weekly(DayOfWeek.Monday, 3, 30));
-
-        _recurringJobManager.AddOrUpdate<PlayerAllAgentRebateDistributionActivator>("PlayerAllAgentRebateMonthlyDistribution",
-            x => x.CreatePlayerAllAgentRebateMonthlyDistributionAsync(default),
-            Cron.Monthly(1, 3, 30));
+        _recurringJobManager.AddOrUpdate<PlayerAllAgentRebateActivator>("PlayerAllAgentRebateDistribution",
+            x => x.CreatePlayerAllAgentRebateAsync(default),
+            Cron.Daily(16, 35));
 
         _recurringJobManager.AddOrUpdate<PlayerRebateActivator>("PlayerRebateDistribution",
             x => x.CreatePlayerRebateAsync(default),

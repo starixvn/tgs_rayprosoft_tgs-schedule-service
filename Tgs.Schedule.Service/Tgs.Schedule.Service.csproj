@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -19,7 +19,6 @@
     <PackageReference Include="Tgs.Brand.GameProvider.Client" Version="0.0.2" />
     <PackageReference Include="Tgs.BrandCertificateClient" Version="0.0.28" />
     <PackageReference Include="Tgs.Game.Type.Round.Aggregate.Client" Version="0.0.2" />
-    <PackageReference Include="Tgs.Player.All.Agent.Client" Version="0.0.2" />
     <PackageReference Include="Tgs.ProfitRebate.Client" Version="1.1.0" />
     <PackageReference Include="Tgs.Promotion.Client" Version="1.0.43" />
     <PackageReference Include="Tgs.Promotion.RebateService.Client" Version="0.0.3" />
