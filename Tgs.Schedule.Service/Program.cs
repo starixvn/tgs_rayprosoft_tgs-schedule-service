@@ -14,12 +14,6 @@ using Tgs.Schedule.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration
-    .AddJsonFile("/config/appsettings.json", true)
-    .AddEnvironmentVariables();
-
-
-
 builder.Services
     .AddReportAggregateClient((options, sp) =>
     {
