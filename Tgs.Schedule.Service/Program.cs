@@ -54,7 +54,7 @@ builder.Services
     .AddPlayerAllAgentClient((options, sp) =>
     {
         var config = sp.GetRequiredService<IConfiguration>();
-        options.Url = config.GetValue<Uri>("Schedule:BrandGameProvider")!;
+        options.Url = config.GetValue<Uri>("Schedule:PlayerAllAgent")!;
     })
     .AddProfitRebateClient(builder.Configuration);
 
