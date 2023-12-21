@@ -14,12 +14,6 @@ using Tgs.Schedule.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration
-    .AddJsonFile("/config/appsettings.json", true)
-    .AddEnvironmentVariables();
-
-
-
 builder.Services
     .AddReportAggregateClient((options, sp) =>
     {
@@ -54,7 +48,7 @@ builder.Services
     .AddPlayerAllAgentClient((options, sp) =>
     {
         var config = sp.GetRequiredService<IConfiguration>();
-        options.Url = config.GetValue<Uri>("Schedule:BrandGameProvider")!;
+        options.Url = config.GetValue<Uri>("Schedule:PlayerAllAgent")!;
     })
     .AddProfitRebateClient(builder.Configuration)
     .AddAgentDividendClient()

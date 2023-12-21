@@ -18,15 +18,15 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Tgs.Agent.Dividend.Client" Version="1.0.0" />
     <PackageReference Include="Tgs.Brand.GameProvider.Client" Version="0.0.2" />
-    <PackageReference Include="Tgs.BrandCertificateClient" Version="0.0.28" />
+    <PackageReference Include="Tgs.BrandCertificateClient" Version="0.0.29" />
     <PackageReference Include="Tgs.Game.Type.Round.Aggregate.Client" Version="0.0.2" />
     <PackageReference Include="Tgs.Player.All.Agent.Client" Version="0.0.2" />
     <PackageReference Include="Tgs.ProfitRebate.Client" Version="1.1.0" />
-    <PackageReference Include="Tgs.Promotion.Client" Version="1.0.43" />
+    <PackageReference Include="Tgs.Promotion.Client" Version="1.0.47" />
     <PackageReference Include="Tgs.Promotion.RebateService.Client" Version="0.0.3" />
     <PackageReference Include="Tgs.Promotion.ReliefMoney.Client" Version="0.0.1" />
     <PackageReference Include="Tgs.Report.Aggregate.Client" Version="0.0.10" />
-    <PackageReference Include="Tgs.Report.Client" Version="0.0.61" />
+    <PackageReference Include="Tgs.Report.Client" Version="0.0.66" />
   </ItemGroup>
 
 </Project>
