@@ -27,7 +27,7 @@ public class PlayerAllAgentRebateDistributionActivator : JobActivator
 
         var now = DateTimeOffset.Now.ToOffset(TimeSpan.FromHours(8));
 
-        var from = DateOnly.FromDateTime(now.DateTime);
+        var from = DateOnly.FromDateTime(now.AddDays(-1).DateTime);
 
         await _playerScheduleClient.DistributeRebatesAsync(from, from);
     }
