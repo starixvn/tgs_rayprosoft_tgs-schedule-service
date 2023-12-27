@@ -79,7 +79,7 @@ public class PlayerAllAgentRebateTests
 
         await sut.CreatePlayerAllAgentRebateDailyDistributionAsync(request.Value);
 
-        var from = DateOnly.FromDateTime(DateTimeOffset.Now.ToOffset(TimeSpan.FromHours(8)).DateTime);
+        var from = DateOnly.FromDateTime(DateTimeOffset.Now.ToOffset(TimeSpan.FromHours(8)).AddDays(-1).DateTime);
 
         await fakePlayerAllAgentScheduleClient.Received(1)
             .DistributeRebatesAsync(from, from);
