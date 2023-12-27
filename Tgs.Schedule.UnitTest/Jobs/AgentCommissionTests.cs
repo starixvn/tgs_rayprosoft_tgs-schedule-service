@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging.Abstractions;
 
 using NSubstitute;
-
+using Tgs.Agent.Dividend.Client;
 using Tgs.BrandCertificate;
 using Tgs.BrandCertificate.Clients;
 using Tgs.ProfitRebate.Client;
@@ -19,11 +19,11 @@ public class AgentCommissionTests
     {
         var fakePerformContextMock = Substitute.For<PerformContextMock>();
         var fakeBrandServiceClient = Substitute.For<IBrandServiceClient>();
-        var fakeProfitRebateClient = Substitute.For<IProfitRebateClient>();
+        var fakeAgentDividendClient = Substitute.For<IAgentDividendClient>();
 
         var sut = new AgentCommissionActivator(
             fakeBrandServiceClient,
-            fakeProfitRebateClient,
+            fakeAgentDividendClient,
             NullLogger<AgentCommissionActivator>.Instance);
 
         fakeBrandServiceClient.QueryBrandListAsync(Arg.Any<BrandListQuery>())
@@ -40,7 +40,7 @@ public class AgentCommissionTests
         await sut.CreateAgentCommissionAsync(request.Value);
 
         _ = fakeBrandServiceClient.Received(1).QueryBrandListAsync(Arg.Any<BrandListQuery>());
-        _ = await fakeProfitRebateClient.Received(1)
-            .CreateAgentDividendAsync(Arg.Any<CreateAgentDividendsRequest>());
+        await fakeAgentDividendClient.Received(1)
+            .GenerateAgentDividend(Arg.Any<Guid>());
     }
 }
