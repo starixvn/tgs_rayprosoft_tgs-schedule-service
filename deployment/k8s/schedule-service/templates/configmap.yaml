@@ -16,7 +16,8 @@ data:
         "GameTypeRoundAggregate": "http://game-type-round-aggregate-service",
         "Brand": "http://brand-cert-api",
         "BrandGameProvider": "http://brand-game-provider-service",
-        "PlayerAllAgent": "http://player-all-agent-service"
+        "PlayerAllAgent": "http://player-all-agent-service",
+        "AgentDividend": "https://agent-dividend-service"
       },
       "ProfitRebate": {
         "Url": "http://profit-rebate-service"

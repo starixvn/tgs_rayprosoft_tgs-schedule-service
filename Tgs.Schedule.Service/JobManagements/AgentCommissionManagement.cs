@@ -10,17 +10,11 @@ using Tgs.ProfitRebate.Client.Models;
 namespace Tgs.Schedule.Service.JobManagements;
 
 [ManagementPage(MenuName = "AgentCommission", Title = "代理分紅")]
-public class AgentCommissionManagement : IJob
+public class AgentCommissionManagement(
+    IProfitRebateClient profitRebateClient,
+    ILogger<AgentCommissionManagement> logger)
+    : IJob
 {
-    private readonly ILogger<AgentCommissionManagement> _logger;
-    private readonly IProfitRebateClient _profitRebateClient;
-
-    public AgentCommissionManagement(IProfitRebateClient profitRebateClient, ILogger<AgentCommissionManagement> logger)
-    {
-        _profitRebateClient = profitRebateClient;
-        _logger = logger;
-    }
-
     [DisplayName("create agent commissions")]
     [Description("分紅指定的品牌")]
     [Queue("agent")]
@@ -30,8 +24,8 @@ public class AgentCommissionManagement : IJob
             "TGS")]
         string brandCode = "")
     {
-        _logger.LogInformation($"Start time:{DateTime.UtcNow}");
+        logger.LogInformation($"Start time:{DateTime.UtcNow}");
 
-        await _profitRebateClient.CreateAgentDividendAsync(new CreateAgentDividendsRequest(brandCode));
+        await profitRebateClient.CreateAgentDividendAsync(new CreateAgentDividendsRequest(brandCode));
     }
 }
