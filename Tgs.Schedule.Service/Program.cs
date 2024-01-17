@@ -51,10 +51,10 @@ builder.Services
         options.Url = config.GetValue<Uri>("Schedule:PlayerAllAgent")!;
     })
     .AddProfitRebateClient(builder.Configuration)
-    .AddAgentDividendClient()
-    .ConfigureHttpClient(httpClient =>
+    .AddAgentDividendClient((options, sp) =>
     {
-        httpClient.BaseAddress = builder.Configuration.GetValue<Uri>("Schedule:AgentDividend");
+        var config = sp.GetRequiredService<IConfiguration>();
+        options.BaseUrl = config.GetValue<Uri>("Schedule:AgentDividend")!;
     });
 
 builder.Services.AddHangfire((sp, config) =>
