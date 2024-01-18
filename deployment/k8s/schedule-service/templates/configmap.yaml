@@ -17,7 +17,7 @@ data:
         "Brand": "http://brand-cert-api",
         "BrandGameProvider": "http://brand-game-provider-service",
         "PlayerAllAgent": "http://player-all-agent-service",
-        "AgentDividend": "https://agent-dividend-service"
+        "AgentDividend": "http://agent-dividend-service"
       },
       "ProfitRebate": {
         "Url": "http://profit-rebate-service"
