@@ -12,7 +12,7 @@ namespace Tgs.Schedule.UnitTest.Jobs;
 
 [TestFixture]
 [Parallelizable]
-public class AgentCommissionTests
+public class AgentDividendTests
 {
     [Test]
     public async Task Create_Agent_Commissions()
@@ -20,13 +20,13 @@ public class AgentCommissionTests
         var fakePerformContextMock = Substitute.For<PerformContextMock>();
         var fakeAgentDividendClient = Substitute.For<IAgentDividendClient>();
 
-        var sut = new AgentCommissionActivator(
+        var sut = new AgentDividendActivator(
             fakeAgentDividendClient,
-            NullLogger<AgentCommissionActivator>.Instance);
+            NullLogger<AgentDividendActivator>.Instance);
 
         var request = fakePerformContextMock.GetPerformContextMock();
 
-        await sut.CreateAgentCommissionAsync(request.Value);
+        await sut.CreateAgentDividendAsync(request.Value);
 
         await fakeAgentDividendClient.Received(1)
             .GenerateAgentDividend(Arg.Any<CancellationToken>());
