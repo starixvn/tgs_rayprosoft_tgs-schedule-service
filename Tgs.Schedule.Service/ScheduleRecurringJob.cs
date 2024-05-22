@@ -8,8 +8,8 @@ public class ScheduleRecurringJob(IRecurringJobManager recurringJobManager) : IS
 {
     public void RecurringJobs()
     {
-        recurringJobManager.AddOrUpdate<AgentCommissionActivator>("AgentCommissionDistribution",
-            x => x.CreateAgentCommissionAsync(default),
+        recurringJobManager.AddOrUpdate<AgentDividendActivator>("AgentDividendDistribution",
+            x => x.CreateAgentDividendAsync(default),
             Cron.Daily(16, 30));
 
         recurringJobManager.AddOrUpdate<PlayerAllAgentRebateSettlementActivator>("PlayerAllAgentRebateDailySettlement",
