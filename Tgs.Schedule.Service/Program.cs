@@ -14,6 +14,8 @@ using Tgs.Schedule.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseSentry();
+
 builder.Services
     .AddReportAggregateClient((options, sp) =>
     {
@@ -103,5 +105,7 @@ app.UseHangfireDashboard(
 app.MapHealthChecks("/healthz");
 
 app.JobRegistration();
+
+SentrySdk.CaptureMessage($"Started result Schedule service at {DateTime.Now.ToString()}");
 
 app.Run();
