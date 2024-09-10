@@ -48,12 +48,12 @@ public class ScheduleRecurringJob(IRecurringJobManager recurringJobManager) : IS
             x => x.CreateRoundAggregateAsync(default),
             Cron.Hourly(1));
 
-        //recurringJobManager.AddOrUpdate<GameTypeRoundAggregateActivator>("GenerateGameTypeRounds",
-        //    x => x.GenerateGameTypeRoundsAsync(default),
-        //    "2,17,32,47 * * * *");
+        recurringJobManager.AddOrUpdate<GameTypeRoundAggregateActivator>("GenerateGameTypeRounds",
+           x => x.GenerateGameTypeRoundsAsync(default),
+           "2,17,32,47 * * * *");
 
-        //recurringJobManager.AddOrUpdate<BrandGameProviderActivator>("BrandGameProviderChangeStatus",
-        //    x => x.ChangeStatusByScheduleAsync(default),
-        //    Cron.Minutely);
+        recurringJobManager.AddOrUpdate<BrandGameProviderActivator>("BrandGameProviderChangeStatus",
+           x => x.ChangeStatusByScheduleAsync(default),
+           Cron.Minutely);
     }
 }
