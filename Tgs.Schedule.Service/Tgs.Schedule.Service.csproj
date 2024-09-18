@@ -19,6 +19,7 @@
     <PackageReference Include="Tgs.Agent.Dividend.Client" Version="1.0.9" />
     <PackageReference Include="Tgs.Brand.GameProvider.Client" Version="0.0.2" />
     <PackageReference Include="Tgs.BrandCertificateClient" Version="0.0.29" />
+    <PackageReference Include="Tgs.Core.Infrastructures.Nats" Version="0.0.5" />
     <PackageReference Include="Tgs.Game.Type.Round.Aggregate.Client" Version="0.0.2" />
     <PackageReference Include="Tgs.Player.All.Agent.Client" Version="0.0.2" />
     <PackageReference Include="Tgs.ProfitRebate.Client" Version="1.1.0" />

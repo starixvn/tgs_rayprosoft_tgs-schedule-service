@@ -11,21 +11,12 @@ using Tgs.Report.Aggregate.Client.Models;
 namespace Tgs.Schedule.Service.JobManagements;
 
 [ManagementPage(MenuName = "Aggregate", Title = "Aggregate")]
-public class AggregateManagement : IJob
+public class AggregateManagement(
+    IReportAggregateClient aggregateClient,
+    IGameTypeRoundClient gameTypeRoundClient,
+    ILogger<AggregateManagement> logger)
+    : IJob
 {
-    private readonly IReportAggregateClient _aggregateClient;
-    private readonly IGameTypeRoundClient _gameTypeRoundClient;
-    private readonly ILogger<AggregateManagement> _logger;
-
-    public AggregateManagement(IReportAggregateClient aggregateClient,
-        IGameTypeRoundClient gameTypeRoundClient,
-        ILogger<AggregateManagement> logger)
-    {
-        _aggregateClient = aggregateClient;
-        _gameTypeRoundClient = gameTypeRoundClient;
-        _logger = logger;
-    }
-
     [DisplayName("create round aggregate")]
     [Description("新增局集合指定的時間")]
     [Queue("aggregate")]
@@ -40,10 +31,10 @@ public class AggregateManagement : IJob
             "0~23, 13 = 13~14")]
         int hour = 0)
     {
-        _logger.LogInformation($"Start time:{DateTime.UtcNow}");
+        logger.LogInformation($"Start time:{DateTime.UtcNow}");
 
         if (DateTimeOffset.TryParse($"{dateTime} +8:00", out _))
-            await _aggregateClient.ManualCreateRoundAggregateAsync(
+            await aggregateClient.ManualCreateRoundAggregateAsync(
                 new ManualCreateUpdateRoundAggregateModel(dateTime, hour));
     }
 
@@ -61,10 +52,10 @@ public class AggregateManagement : IJob
             "0~23, 13 = 13~14")]
         int hour = 0)
     {
-        _logger.LogInformation($"Start time:{DateTime.UtcNow}");
+        logger.LogInformation($"Start time:{DateTime.UtcNow}");
 
         if (DateTimeOffset.TryParse($"{dateTime} +8:00", out _))
-            await _aggregateClient.ManualCreatePlayerAggregateAsync(
+            await aggregateClient.ManualCreatePlayerAggregateAsync(
                 new ManualCreateUpdatePlayerAggregateModel(dateTime, hour));
     }
 
@@ -90,7 +81,7 @@ public class AggregateManagement : IJob
 
         foreach (var (_, from, to) in intervals)
         {
-            await _gameTypeRoundClient.GenerateGameTypeRoundsAsync(from, to).ConfigureAwait(false);
+            await gameTypeRoundClient.GenerateGameTypeRoundsAsync(from, to).ConfigureAwait(false);
 
             await Task.Delay(3000);
         }

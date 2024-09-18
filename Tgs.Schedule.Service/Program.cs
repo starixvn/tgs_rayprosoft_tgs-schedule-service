@@ -7,6 +7,7 @@ using Hangfire.Dashboard.Management.v2.Support;
 using Hangfire.Redis.StackExchange;
 
 using Tgs.Brand.GameProvider.Client.DependencyInjection;
+using TGS.Core.Infrastructures.Nats;
 using Tgs.Game.Type.Round.Aggregate.Client.DependencyInjection;
 using Tgs.Player.All.Agent.Client.DependencyInjection;
 using Tgs.Promotion.ReliefMoney.Client.DependencyInjection;
@@ -15,6 +16,7 @@ using Tgs.Schedule.Service;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddNatsMessage(builder.Configuration.GetConnectionString("Nats")!)
     .AddReportAggregateClient((options, sp) =>
     {
         var config = sp.GetRequiredService<IConfiguration>();
@@ -78,7 +80,7 @@ builder.Services.AddHangfire((sp, config) =>
 
 builder.Services.AddHangfireServer(options =>
 {
-    var queues = new List<string> { "brand", "agent", "player", "aggregate" };
+    var queues = new List<string> { "brand", "agent", "player", "aggregate", "promotion" };
 
     queues.AddRange(JobsHelper.GetAllQueues());
 

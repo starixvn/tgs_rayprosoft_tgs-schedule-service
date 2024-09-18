@@ -10,17 +10,9 @@ using Tgs.ProfitRebate.Client.Models;
 namespace Tgs.Schedule.Service.JobManagements;
 
 [ManagementPage(MenuName = "PlayerRebate", Title = "玩家反水")]
-public class PlayerRebateManagement : IJob
+public class PlayerRebateManagement(IProfitRebateClient profitRebateClient, ILogger<PlayerRebateManagement> logger)
+    : IJob
 {
-    private readonly ILogger<PlayerRebateManagement> _logger;
-    private readonly IProfitRebateClient _profitRebateClient;
-
-    public PlayerRebateManagement(IProfitRebateClient profitRebateClient, ILogger<PlayerRebateManagement> logger)
-    {
-        _profitRebateClient = profitRebateClient;
-        _logger = logger;
-    }
-
     [DisplayName("create player vip rebates")]
     [Description("vip返水指定的時間")]
     [Queue("player")]
@@ -31,9 +23,9 @@ public class PlayerRebateManagement : IJob
             "2023/09/18")]
         string date = "")
     {
-        _logger.LogInformation($"Start time:{DateTime.UtcNow}");
+        logger.LogInformation($"Start time:{DateTime.UtcNow}");
 
-        await _profitRebateClient.CreatePlayerRebateAsync(new CreatePlayerRebateRequest(date));
+        await profitRebateClient.CreatePlayerRebateAsync(new CreatePlayerRebateRequest(date));
     }
 
     [DisplayName("create player all agent rebates")]
@@ -46,8 +38,8 @@ public class PlayerRebateManagement : IJob
             "2023/09/18")]
         string dateTime = "")
     {
-        _logger.LogInformation($"Start time:{DateTime.UtcNow}");
+        logger.LogInformation($"Start time:{DateTime.UtcNow}");
 
-        await _profitRebateClient.CreatePlayerAllAgentRebateAsync(new CreateAllAgentPlayerRebatesRequest(dateTime));
+        await profitRebateClient.CreatePlayerAllAgentRebateAsync(new CreateAllAgentPlayerRebatesRequest(dateTime));
     }
 }

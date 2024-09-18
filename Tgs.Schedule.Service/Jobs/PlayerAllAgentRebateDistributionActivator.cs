@@ -4,32 +4,24 @@ using Tgs.Player.All.Agent.Client;
 
 namespace Tgs.Schedule.Service.Jobs;
 
-public class PlayerAllAgentRebateDistributionActivator : JobActivator
+public class PlayerAllAgentRebateDistributionActivator(
+    IPlayerAllAgentScheduleClient playerScheduleClient,
+    ILogger<PlayerAllAgentRebateDistributionActivator> logger)
+    : JobActivator
 {
-    private readonly ILogger<PlayerAllAgentRebateDistributionActivator> _logger;
-    private readonly IPlayerAllAgentScheduleClient _playerScheduleClient;
-
-    public PlayerAllAgentRebateDistributionActivator(
-        IPlayerAllAgentScheduleClient playerScheduleClient,
-        ILogger<PlayerAllAgentRebateDistributionActivator> logger)
-    {
-        _playerScheduleClient = playerScheduleClient;
-        _logger = logger;
-    }
-
     [Queue("player")]
     [AutomaticRetry(Attempts = 0)]
     public async Task CreatePlayerAllAgentRebateDailyDistributionAsync(PerformContext? context)
     {
         var createdTime = context!.BackgroundJob.CreatedAt;
 
-        _logger.LogInformation("#### player all agent rebate daily distribution execution time: {createdTime} ####", $"{createdTime:u}");
+        logger.LogInformation("#### player all agent rebate daily distribution execution time: {createdTime} ####", $"{createdTime:u}");
 
         var now = DateTimeOffset.Now.ToOffset(TimeSpan.FromHours(8));
 
         var from = DateOnly.FromDateTime(now.AddDays(-1).DateTime);
 
-        await _playerScheduleClient.DistributeRebatesAsync(from, from);
+        await playerScheduleClient.DistributeRebatesAsync(from, from);
     }
 
     [Queue("player")]
@@ -38,7 +30,7 @@ public class PlayerAllAgentRebateDistributionActivator : JobActivator
     {
         var createdTime = context!.BackgroundJob.CreatedAt;
 
-        _logger.LogInformation("#### player all agent rebate weekly distribution execution time: {createdTime} ####", $"{createdTime:u}");
+        logger.LogInformation("#### player all agent rebate weekly distribution execution time: {createdTime} ####", $"{createdTime:u}");
 
         var now = DateTimeOffset.Now.ToOffset(TimeSpan.FromHours(8));
 
@@ -46,7 +38,7 @@ public class PlayerAllAgentRebateDistributionActivator : JobActivator
 
         var to = DateOnly.FromDateTime(now.AddDays(-7).GetSunday().DateTime);
 
-        await _playerScheduleClient.DistributeRebatesAsync(from, to);
+        await playerScheduleClient.DistributeRebatesAsync(from, to);
     }
 
     [Queue("player")]
@@ -55,7 +47,7 @@ public class PlayerAllAgentRebateDistributionActivator : JobActivator
     {
         var createdTime = context!.BackgroundJob.CreatedAt;
 
-        _logger.LogInformation("#### player all agent rebate monthly distribution execution time: {createdTime} ####", $"{createdTime:u}");
+        logger.LogInformation("#### player all agent rebate monthly distribution execution time: {createdTime} ####", $"{createdTime:u}");
 
         var now = DateTimeOffset.Now.ToOffset(TimeSpan.FromHours(8));
 
@@ -63,6 +55,6 @@ public class PlayerAllAgentRebateDistributionActivator : JobActivator
 
         var to = DateOnly.FromDateTime(now.AddMonths(-1).GetLastDayOfMonth().DateTime);
 
-        await _playerScheduleClient.DistributeRebatesAsync(from, to);
+        await playerScheduleClient.DistributeRebatesAsync(from, to);
     }
 }
