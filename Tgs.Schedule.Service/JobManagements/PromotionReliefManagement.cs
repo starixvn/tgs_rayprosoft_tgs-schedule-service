@@ -9,18 +9,11 @@ using Tgs.Promotion.ReliefMoney.Client;
 namespace Tgs.Schedule.Service.JobManagements;
 
 [ManagementPage(MenuName = "SOS", Title = "救援金")]
-public class PromotionReliefManagement : IJob
+public class PromotionReliefManagement(
+    IPromotionReliefClient promotionReliefClient,
+    ILogger<PromotionReliefManagement> logger)
+    : IJob
 {
-    private readonly ILogger<PromotionReliefManagement> _logger;
-    private readonly IPromotionReliefClient _promotionReliefClient;
-
-    public PromotionReliefManagement(IPromotionReliefClient promotionReliefClient,
-        ILogger<PromotionReliefManagement> logger)
-    {
-        _promotionReliefClient = promotionReliefClient;
-        _logger = logger;
-    }
-
     [DisplayName("promotion relief settle daily")]
     [Description("SOS每日結算(未派發僅計算)")]
     [Queue("promotion")]
@@ -35,9 +28,9 @@ public class PromotionReliefManagement : IJob
             "+08時區整點 = 16")]
         int hour = 16)
     {
-        _logger.LogInformation($"Start time:{DateTime.UtcNow}");
+        logger.LogInformation($"Start time:{DateTime.UtcNow}");
 
-        await _promotionReliefClient.SettleAsync(DateOnly.Parse(date), hour);
+        await promotionReliefClient.SettleAsync(DateOnly.Parse(date), hour);
     }
 
     [DisplayName("promotion relief send daily and weekly and monthly")]
@@ -54,8 +47,8 @@ public class PromotionReliefManagement : IJob
             "+08時區整點 = 16")]
         int hour = 16)
     {
-        _logger.LogInformation($"Start time:{DateTime.UtcNow}");
+        logger.LogInformation($"Start time:{DateTime.UtcNow}");
 
-        await _promotionReliefClient.SendBonusAsync(DateOnly.Parse(date), hour);
+        await promotionReliefClient.SendBonusAsync(DateOnly.Parse(date), hour);
     }
 }

@@ -9,18 +9,11 @@ using Tgs.Promotion.RebateService.Client;
 namespace Tgs.Schedule.Service.JobManagements;
 
 [ManagementPage(MenuName = "PromotionRebate", Title = "活動反水")]
-public class PromotionRebateManagement : IJob
+public class PromotionRebateManagement(
+    IPromotionRebateClient promotionRebateClient,
+    ILogger<PromotionRebateManagement> logger)
+    : IJob
 {
-    private readonly ILogger<PromotionRebateManagement> _logger;
-    private readonly IPromotionRebateClient _promotionRebateClient;
-
-    public PromotionRebateManagement(IPromotionRebateClient promotionRebateClient,
-        ILogger<PromotionRebateManagement> logger)
-    {
-        _promotionRebateClient = promotionRebateClient;
-        _logger = logger;
-    }
-
     [DisplayName("promotion rebate settle daily")]
     [Description("返水每日結算(未派發僅計算)")]
     [Queue("promotion")]
@@ -35,9 +28,9 @@ public class PromotionRebateManagement : IJob
             "+08時區整點 = 16")]
         int hour = 16)
     {
-        _logger.LogInformation($"Start time:{DateTime.UtcNow}");
+        logger.LogInformation($"Start time:{DateTime.UtcNow}");
 
-        await _promotionRebateClient.SettleAsync(DateOnly.Parse(date), hour);
+        await promotionRebateClient.SettleAsync(DateOnly.Parse(date), hour);
     }
 
     [DisplayName("promotion rebate send daily and weekly")]
@@ -54,8 +47,8 @@ public class PromotionRebateManagement : IJob
             "+08時區整點 = 16")]
         int hour = 16)
     {
-        _logger.LogInformation($"Start time:{DateTime.UtcNow}");
+        logger.LogInformation($"Start time:{DateTime.UtcNow}");
 
-        await _promotionRebateClient.SendBonusAsync(DateOnly.Parse(date), hour);
+        await promotionRebateClient.SendBonusAsync(DateOnly.Parse(date), hour);
     }
 }

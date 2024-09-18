@@ -40,9 +40,13 @@ public class ScheduleRecurringJob(IRecurringJobManager recurringJobManager) : IS
             x => x.CreatePlayerRebateAsync(default),
             Cron.Daily(2, 15));
 
+        recurringJobManager.AddOrUpdate<MilestonePromotionActivator>("MilestonePromotionDistribution",
+            x => x.MilestonePromotionDistributionAsync(default),
+            Cron.Hourly(4));
+
         recurringJobManager.AddOrUpdate<PlayerAggregateActivator>("CreatePlayerAggregate",
             x => x.CreatePlayerAggregateAsync(default),
-            Cron.Hourly(10));
+            Cron.Hourly(3));
 
         recurringJobManager.AddOrUpdate<RoundAggregateActivator>("CreateRoundAggregate",
             x => x.CreateRoundAggregateAsync(default),
