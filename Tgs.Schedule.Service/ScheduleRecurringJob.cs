@@ -55,5 +55,9 @@ public class ScheduleRecurringJob(IRecurringJobManager recurringJobManager) : IS
         recurringJobManager.AddOrUpdate<BrandGameProviderActivator>("BrandGameProviderChangeStatus",
            x => x.ChangeStatusByScheduleAsync(default),
            Cron.Minutely);
+
+        recurringJobManager.AddOrUpdate<SabaPlusActivator>("SabaPlusBetResultCheck",
+            x => x.BetResultCheck(5, default),
+            "*/5 * * * *");
     }
 }

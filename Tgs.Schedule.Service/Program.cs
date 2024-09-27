@@ -13,6 +13,7 @@ using Tgs.Game.Type.Round.Aggregate.Client.DependencyInjection;
 using Tgs.Player.All.Agent.Client.DependencyInjection;
 using Tgs.Promotion.ReliefMoney.Client.DependencyInjection;
 using Tgs.Schedule.Service;
+using SabaPlus.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,6 +75,12 @@ builder.Services
         options.Url = config.GetValue<Uri>("Schedule:PlayerAllAgent")!;
     })
     .AddProfitRebateClient(builder.Configuration)
+    .AddSabaPlusClient((options, sp) =>
+    {
+        var config = sp.GetRequiredService<IConfiguration>();
+
+        options.BaseUrl = config.GetValue<Uri>("Schedule:SabaPlus")!;
+    })
     .AddAgentDividendClient((options, sp) =>
     {
         var config = sp.GetRequiredService<IConfiguration>();
@@ -99,7 +106,6 @@ builder.Services
                         !httpContext.Request.Path.StartsWithSegments("/profiler/") &&
                         !new[] { "html", "ico", "png", "jpg" }.Any(
                             ext => httpContext.Request.Path.Value.EndsWith($".{ext}"))));
-
 
 builder.Services.AddHangfire((sp, config) =>
     {
