@@ -128,7 +128,7 @@ builder.Services.AddHangfire((sp, config) =>
 
 builder.Services.AddHangfireServer(options =>
 {
-    var queues = new List<string> { "brand", "agent", "player", "aggregate" };
+    var queues = new List<string> { "brand", "agent", "player", "aggregate", "sabaplus" };
 
     queues.AddRange(JobsHelper.GetAllQueues());
 
