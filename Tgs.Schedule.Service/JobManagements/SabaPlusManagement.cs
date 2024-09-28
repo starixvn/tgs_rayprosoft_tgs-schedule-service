@@ -11,7 +11,7 @@ public class SabaPlusManagement(ISabaPlusClient client, ILogger<SabaPlusManageme
 {
     [DisplayName("Bet result check")]
     [Queue("sabaplus")]
-    public async Task BetResultCheckAsync([DisplayData("Diff in Minitue", "5")] int minute)
+    public async Task BetResultCheckAsync([DisplayData("Diff in Minute", "5")] int minute)
     {
         logger.LogInformation($"Start time:{DateTime.UtcNow}");
 
