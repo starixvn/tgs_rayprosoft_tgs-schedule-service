@@ -29,4 +29,16 @@ public class PlayerAggregateActivator : JobActivator
 
         _ = await _reportAggregateClient.CreatePlayerAggregateAsync(new CreateUpdatePlayerAggregateModel());
     }
+
+    [Queue("aggregate")]
+    [AutomaticRetry(Attempts = 1)]
+    public async Task GeneratePlayerAggregateAsync(PerformContext? context)
+    {
+        var createdTime = context!.BackgroundJob.CreatedAt;
+
+        _logger.LogInformation("#### player aggregate execution time: {createdTime} ####", $"{createdTime:u}");
+
+        _ = await _reportAggregateClient.GeneratePlayerAggregateAsync(new GeneratePlayerAggregateModel());
+    }
+
 }

@@ -44,6 +44,10 @@ public class ScheduleRecurringJob(IRecurringJobManager recurringJobManager) : IS
             x => x.CreatePlayerAggregateAsync(default),
             Cron.Hourly(10));
 
+        recurringJobManager.AddOrUpdate<PlayerAggregateActivator>("GeneratePlayerAggregate",
+          x => x.GeneratePlayerAggregateAsync(default),
+          Cron.Hourly(30));
+
         recurringJobManager.AddOrUpdate<RoundAggregateActivator>("CreateRoundAggregate",
             x => x.CreateRoundAggregateAsync(default),
             Cron.Hourly(1));
