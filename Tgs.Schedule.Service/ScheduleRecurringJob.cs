@@ -48,6 +48,11 @@ public class ScheduleRecurringJob(IRecurringJobManager recurringJobManager) : IS
             x => x.CreateRoundAggregateAsync(default),
             Cron.Hourly(1));
 
+        recurringJobManager.AddOrUpdate<RoundAggregateActivator>("GenerateRoundAggregate",
+              x => x.GenerateRoundAggregateAsync(default),
+              Cron.Hourly(15)
+            );
+
         recurringJobManager.AddOrUpdate<GameTypeRoundAggregateActivator>("GenerateGameTypeRounds",
            x => x.GenerateGameTypeRoundsAsync(default),
            "2,17,32,47 * * * *");

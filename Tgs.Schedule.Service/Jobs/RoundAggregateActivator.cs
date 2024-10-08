@@ -29,4 +29,15 @@ public class RoundAggregateActivator : JobActivator
 
         _ = await _reportAggregateClient.CreateRoundAggregateAsync(new CreateRoundAggregateModel());
     }
+
+    [Queue("aggregate")]
+    [AutomaticRetry(Attempts = 0)]
+    public async Task GenerateRoundAggregateAsync(PerformContext? context)
+    {
+        var createdTime = context!.BackgroundJob?.CreatedAt;
+
+        _logger.LogInformation("#### round aggregate execution time: {createdTime} ####", $"{createdTime:u}");
+
+        _ = await _reportAggregateClient.GenerateRoundAggregateAsync(new GenerateRoundAggregateModel());
+    }
 }
