@@ -59,5 +59,13 @@ public class ScheduleRecurringJob(IRecurringJobManager recurringJobManager) : IS
         recurringJobManager.AddOrUpdate<BrandGameProviderActivator>("BrandGameProviderChangeStatus",
             x => x.ChangeStatusByScheduleAsync(default),
             Cron.Minutely);
+
+        recurringJobManager.AddOrUpdate<BrandGameProviderAggregateDailyActivator>("BrandGameProviderAggregateDaily",
+            x => x.GenerateBrandGameProviderDailyAggregateAsync(default),
+            Cron.Daily(16, 5));
+
+        recurringJobManager.AddOrUpdate<BrandGameProviderAggregateMonthlyActivator>("BrandGameProviderAggregateMonthly",
+            x => x.GenerateBrandGameProviderMonthlyAggregateAsync(default),
+            Cron.Monthly(3, 16, 6));
     }
 }

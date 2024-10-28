@@ -1,8 +1,6 @@
 ﻿using Hangfire;
 using Hangfire.Server;
 using TGS.Core.Infrastructures.Nats.Interface;
-using Tgs.Report.Aggregate.Client;
-using Tgs.Report.Aggregate.Client.Models;
 
 namespace Tgs.Schedule.Service.Jobs;
 
